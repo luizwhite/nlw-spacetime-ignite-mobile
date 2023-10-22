@@ -1,25 +1,12 @@
 import { useCallback, useEffect } from 'react'
-import { ImageBackground, Text, TouchableOpacity, View } from 'react-native'
-import { styled } from 'nativewind'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { useRouter } from 'expo-router'
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session'
 import * as SecureStore from 'expo-secure-store'
 
-import {
-  useFonts,
-  Roboto_400Regular,
-  Roboto_700Bold,
-} from '@expo-google-fonts/roboto'
-
-import { BaiJamjuree_700Bold } from '@expo-google-fonts/bai-jamjuree'
-
 import { api } from '../src/lib/api'
 
-import blurBg from '../src/assets/bg-blur.png'
-import Stripes from '../src/assets/stripes.svg'
 import NLWLogo from '../src/assets/nlw-spacetime-logo.svg'
-
-const StyledStripes = styled(Stripes)
 
 // Endpoint
 const discovery = {
@@ -31,12 +18,6 @@ const discovery = {
 
 export default function App() {
   const router = useRouter()
-
-  const [hasLoadedFonts] = useFonts({
-    Roboto_400Regular,
-    Roboto_700Bold,
-    BaiJamjuree_700Bold,
-  })
 
   const [, res, signInWithGithub] = useAuthRequest(
     {
@@ -74,19 +55,8 @@ export default function App() {
     }
   }, [res, handleGithubOAuthCode])
 
-  if (!hasLoadedFonts) return null
-
   return (
-    <ImageBackground
-      source={blurBg}
-      imageStyle={{
-        position: 'absolute',
-        left: '-100%',
-      }}
-      className="relative flex-1 bg-gray-900 px-8 py-10"
-    >
-      <StyledStripes className="absolute left-2" />
-
+    <View className="flex-1 items-center px-8 py-10">
       <View className="flex-1 items-center justify-center gap-6">
         <NLWLogo />
 
@@ -114,6 +84,6 @@ export default function App() {
       <Text className="text-center font-body text-sm leading-relaxed text-gray-200">
         Feito com 💜 no NLW da Rocketseat
       </Text>
-    </ImageBackground>
+    </View>
   )
 }
